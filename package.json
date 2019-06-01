@@ -1,6 +1,6 @@
 {
   "name": "boke-ui-r",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "description": "boke common commonents with ract",
   "author": "",
   "license": "MIT",
@@ -57,5 +57,9 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "babel-preset-stage-2": "^6.24.1",
+    "react-beautiful-dnd": "^11.0.3"
+  }
 }

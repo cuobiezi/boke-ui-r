@@ -1,0 +1,31 @@
+.boke-upload{
+  width: 100px; 
+  height: 100px;
+  box-sizing: border-box;
+  border: 1px dashed #ddd;
+  font-size: 40px;
+  line-height: 85px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.boke-upload-input{
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 98px;
+  height: 98px;
+  opacity: 0;
+}
+.boke-upload-input-cover{
+  position: absolute;
+  width: 98px;
+  height: 98px;
+  background: #fff;
+  left: 0;
+  top: 0;
+}
+.boke-upload-input-cover img{
+  width: 100%;
+}
