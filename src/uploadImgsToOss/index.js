@@ -14,7 +14,9 @@ export default class UploadImgsToOss extends Component {
     this.state = {
       imageUrls: this.props.imageUrls || [],
       maxNum: this.props.maxNum || 6,
-      showDelete: -1
+      showDelete: -1,
+      drapImage: '',
+      drapIndex: -1
     }
   }
   // 选择图片
@@ -71,14 +73,22 @@ export default class UploadImgsToOss extends Component {
     // 删除
     this.props.successUpload(img)
   }
-  onDragStart = (e) => {
-    console.log(e, 'aaa')
+  onDragStart = (e, image, index) => {
+    this.setState({
+      drapImage: image,
+      drapIndex: index
+    })
   }
-  onDrop = () => {
-    // console.log('bbb')
+  onDrop = (e, image, index) => {
+    let {drapIndex, drapImage, imageUrls} = this.state
+    if(drapImage === image) return ;
+    imageUrls.splice(drapIndex, 1, ...imageUrls.splice(index, 1, imageUrls[drapIndex]));
+    this.setState({
+      imageUrls
+    })
   }
-  onDragLeave = () => {
-    console.log('lever')
+  onDragLeave = (e, image) => {
+
   }
   render() {
     const { imageUrls, maxNum, showDelete } = this.state
@@ -87,14 +97,15 @@ export default class UploadImgsToOss extends Component {
         {imageUrls.map((item, index) => (
           <div
             draggable='true'
-            onDragOver={(e) => this.onDrop(e, index)}
-            onDragLeave={(e) => this.onDragLeave(e, index)}
-            onDragStart={(e) => this.onDragStart(e, index)}
+            droppable='true'
+            onDragOver={(e) => this.onDrop(e, item, index)}
+            onDragLeave={(e) => this.onDragLeave(e, item, index)}
+            onDragStart={(e) => this.onDragStart(e, item, index)}
             className={styles['boke-upload-images']}
             onMouseLeave={() => { this.setState({showDelete: -1}) }}
             onMouseEnter={() => { this.setState({showDelete: index}) }}
             key={index}>
-            <img className={styles['upload-img']} style={{width: '98px'}} alt='' src={item} />{index}
+            <img className={styles['upload-img']} style={{width: '98px'}} alt='' src={item} />
             {
               showDelete === index ? <div className={styles['delete-this-imge']}><img onClick={() => { this.delete(item) }} alt='删除' src={require('./delete.svg')} /></div> : ''
             }
