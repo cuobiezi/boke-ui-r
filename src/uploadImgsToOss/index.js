@@ -77,13 +77,14 @@ export default class UploadImgsToOss extends Component {
     this.props.successUpload(img)
   }
   onDrop = (e, image, index) => {
-    e.preventDefault()
+    // e.preventDefault()
     let {drapIndex, drapImage, imageUrls} = this.state
     if (drapImage === image) return
     imageUrls.splice(drapIndex, 1, ...imageUrls.splice(index, 1, imageUrls[drapIndex]))
     this.setState({
       imageUrls
     })
+    this.props.successUpload(imageUrls)
   }
   onDragLeave = (e, image, index) => {
     this.setState({
