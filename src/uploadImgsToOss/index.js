@@ -4,10 +4,11 @@ import styles from './styles.css'
 
 export default class UploadImgsToOss extends Component {
   static propTypes = {
+    oss: PropTypes.object,
     maxNum: PropTypes.number,
+    fail: PropTypes.func,
     imageUrls: PropTypes.array,
-    getOss: PropTypes.func,
-    successUpload: PropTypes.func,
+    getImageUrls: PropTypes.func,
     definedImage: PropTypes.string,
     defineChange: PropTypes.func
   }
@@ -15,7 +16,7 @@ export default class UploadImgsToOss extends Component {
     super(props)
     this.state = {
       imageUrls: this.props.imageUrls || [],
-      maxNum: this.props.maxNum || 6,
+      maxNum: this.props.maxNum || 1,
       showDelete: -1,
       drapImage: '',
       drapIndex: -1,
@@ -29,7 +30,7 @@ export default class UploadImgsToOss extends Component {
   }
   // 获取上传权限
   getOss = (files) => {
-    let res = this.props.getOss()
+    let res = this.props.oss
     for (const key in files) {
       if (files.hasOwnProperty(key)) {
         const element = files[key]
@@ -58,13 +59,14 @@ export default class UploadImgsToOss extends Component {
         res.json().then(resError => {
         })
         throw new Error('Fail to get response with status ' + res.status)
+        this.props.fail(res.status);
       }
       const imageUrl = '/images/' + ossObj.imageDir + '/' + imageName + '.png'
       this.setState({
         imageUrls: [...this.state.imageUrls, imageUrl]
         // isUpload: true
       })
-      this.props.successUpload(this.state.imageUrls)
+      this.props.getImageUrls(this.state.imageUrls)
     }).catch(err => { console.log(err) })
   }
   // 删除图片
@@ -74,7 +76,7 @@ export default class UploadImgsToOss extends Component {
       imageUrls: img
     })
     // 删除
-    this.props.successUpload(img)
+    this.props.getImageUrls(img)
   }
   onDrop = (e, image, index) => {
     // e.preventDefault()
@@ -84,7 +86,7 @@ export default class UploadImgsToOss extends Component {
     this.setState({
       imageUrls
     })
-    this.props.successUpload(imageUrls)
+    this.props.getImageUrls(imageUrls)
   }
   onDragLeave = (e, image, index) => {
     this.setState({
