@@ -2,7 +2,7 @@
  * @Author: cuobiezi 
  * @Date: 2018-08-31 09:24:54 
  * @Last Modified by: Conroy
- * @Last Modified time: 2019-06-01 15:47:01
+ * @Last Modified time: 2019-06-03 11:29:40
  */
  .boke-c-uploadImgs {
   position: relative;
@@ -23,6 +23,18 @@
 }
 .boke-c-uploadImgs .delete-this-imge img {
   width: 20px;
+}
+/* 默认 */
+.boke-c-uploadImgs .defined-img{
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+/* 设置默认 */
+.boke-c-uploadImgs .set-defined-img {
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 .boke-c-uploadImgs .delete-this-imge:hover {
   background: rgba(0, 0, 0, 0.4);
